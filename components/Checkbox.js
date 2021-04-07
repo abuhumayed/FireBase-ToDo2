@@ -9,6 +9,7 @@ export default ({isChecked,onChecked,...props}) => {
         <TouchableOpacity
         style = {styles.checkBox}
         onPress = {onChecked}
+        alignItems = 'center'
         >
       <Text
       style = {{color:Colors.lightGray}}
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
       borderRadius : 3,
       borderWidth : 1,
       margin : 5 ,
-      borderColor : Colors.lightGray,
+      borderColor : Colors.black,
       color :Colors.lightGray,
       backgroundColor : '#fff0' ,
      

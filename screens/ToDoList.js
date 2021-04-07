@@ -7,7 +7,7 @@ import {Ionicons} from '@expo/vector-icons'
 const renderAddListIcon = (addItem) =>{
     return(
         <TouchableOpacity
-            onPress = { () => addItem({text : 'helloagain', isChecked : false})}>
+            onPress = { () => addItem({text : "" , isChecked : false,isNewItem : true})}>
             <Text style= {styles.icon}>+</Text>
         </TouchableOpacity>
     )
@@ -40,10 +40,11 @@ export default ({navigation}) => {
         <View style = {styles.container} >
       <FlatList
         data ={toDoItems}
-        renderItem={({item: {text,isChecked},index})=> {
+        renderItem={({item: {text,isChecked,isNewItem},index})=> {
           return <ToDoItem 
           text={text} 
-          isChecked={isChecked} 
+          isChecked={isChecked}
+          isNewItem = {isNewItem}
           onChecked = {()=>{
            const toDoItem = toDoItems[index];
            toDoItem.isChecked = !isChecked
@@ -56,8 +57,11 @@ export default ({navigation}) => {
             toDoItem.text = newText;
             updateItem(index, toDoItem);
           }}
+            onDelete = {() => {
+            removeItemFromLists(index)
+            } }
           />
-
+         
         }}      
 
       />
