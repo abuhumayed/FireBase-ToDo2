@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator, HeaderBackground}  from '@react-navigation/stack'
+import Home from './screens/Home';
+import ToDoList from './screens/ToDoList';
+
+const Stack = createStackNavigator ();
+
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen  name = 'FireToDo' component = {Home} />
+        <Stack.Screen  
+        name = 'Sub-Tasks'
+        component = {ToDoList}
+        options = {({route}) => {
+          return {
+            title: route.params.title,
+            headerStyle:{
+              backgroundColor : route.params.color
+            } ,
+
+            headerTintColor : 'white'
+          }
+          
+        }}
+        />
+      </Stack.Navigator>
+
+    </NavigationContainer>
+    
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
