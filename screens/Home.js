@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,TouchableOpacity,FlatList,} from 'react-native';
 import Colors from '../constants/Colors'
 import {Ionicons} from '@expo/vector-icons'
 
-const ListButton = ({title,color,onPress,onDelete} ) => {
+const ListButton = ({title,color,onPress,onDelete,onOptions} ) => {
     return (
         <TouchableOpacity 
         style = {[styles.itemContainer,{backgroundColor:color}]} 
@@ -13,7 +13,7 @@ const ListButton = ({title,color,onPress,onDelete} ) => {
             <Text style = {styles.itemTitle} >{title}</Text>
         </View>
         <View style = {{flexDirection : 'row' }}  >
-           <TouchableOpacity onPress = {() => {} }>
+           <TouchableOpacity onPress = {onOptions}>
             <Ionicons name = {'options-outline'}  size ={24} color = 'white'  />              
            </TouchableOpacity>
            <TouchableOpacity onPress = { onDelete}>
@@ -24,10 +24,10 @@ const ListButton = ({title,color,onPress,onDelete} ) => {
     )
 }
 
-const renderAddListIcon = (addItem) =>{
+const renderAddListIcon = (navigation,addItemToLists) =>{
     return(
         <TouchableOpacity
-            onPress = { () => addItem({title : 'sing', color:Colors.olive})}>
+            onPress = { () => navigation.navigate('Options',{saveChanges:addItemToLists})}>
             <Text style= {styles.icon}>+</Text>
         </TouchableOpacity>
     )
@@ -50,10 +50,15 @@ export default ({navigation}) => {
         lists.splice(index,1)
         setLists([...lists])
     }
+    const updateItemFromLists = (index,item) => {
+        lists[index] = item;
+        setLists([...lists]);
+
+    }
 
      useLayoutEffect(() =>{
          navigation.setOptions({
-             headerRight: () => renderAddListIcon(addItemToLists)
+             headerRight: () => renderAddListIcon(navigation,addItemToLists)
          })
      } )
     
@@ -68,6 +73,7 @@ export default ({navigation}) => {
                 color = {color}
                 navigation = {navigation}
                 onPress ={() => {navigation.navigate('Sub-Tasks',{title,color,})}}
+                onOptions = {()=>{navigation.navigate('Options',{title,color,saveChanges: (item) => updateItemFromLists(index,item)})}  }
                 onDelete = {() => removeItemFromLists(index)}
                 />
             )
