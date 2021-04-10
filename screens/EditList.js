@@ -1,9 +1,10 @@
 import React,{ useState} from 'react';
 import {CommonActions} from '@react-navigation/native';
-import { StyleSheet, Text, View,TouchableOpacity,TextInput} from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity,TextInput, Button} from 'react-native';
 import Colors from '../constants/Colors'
 import {Ionicons} from '@expo/vector-icons'
 import ColorSelector from '../components/ColorSelector'
+import CusButton from '../components/CusButton'
 
 const colorList = [
     
@@ -60,26 +61,18 @@ export default ({navigation, route}) => {
 
                   />
     </View>
-   <TouchableOpacity 
-   onPress = {()=>{
-       if (title.length>1){
-           route.params.saveChanges({title,color});
-           navigation.dispatch(CommonActions.goBack());
-           
-        }else{
-            setValidity(false);
-
-       }
-   }}
-   style = {styles.saveButton}>
-       <Text
-       style = {{ color : 'white',
-       fontSize : 24,
-       fontWeight : 'bold'}}
-       >
-        Save
-       </Text>
-   </TouchableOpacity>
+   <CusButton text = 'save'
+              onPress = {()=>{
+                if (title.length>1){
+                    route.params.saveChanges({title,color});
+                    navigation.dispatch(CommonActions.goBack());
+                    
+                 }else{
+                     setValidity(false);
+         
+                }
+            }}
+   />
 
         </View>
     )
@@ -104,16 +97,7 @@ const styles = StyleSheet.create({
         
 
     },
-    saveButton : {
-        borderRadius : 25,
-        backgroundColor : Colors.darkGray,
-        height : 48,
-        margin : 16,
-        justifyContent : 'center',
-        alignItems : 'center',
-       
-
-    },
+ 
     label :{
      
         marginBottom : 10,

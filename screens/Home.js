@@ -26,10 +26,24 @@ const ListButton = ({title,color,onPress,onDelete,onOptions} ) => {
 
 const renderAddListIcon = (navigation,addItemToLists) =>{
     return(
+    
+        <View Style = {{flexDirection : "row"}}  >
+               <TouchableOpacity
+              style = {{justifyContent:"center" ,marginRight:4 }} 
+            onPress = { () => navigation.navigate('Settings')}>
+            
+            <Ionicons name = {'settings'}  size ={16}  />       
+           
+        </TouchableOpacity>
         <TouchableOpacity
+               style = {{justifyContent:"center" ,marginRight:4 }} 
             onPress = { () => navigation.navigate('Options',{saveChanges:addItemToLists})}>
             <Text style= {styles.icon}>+</Text>
         </TouchableOpacity>
+
+        
+        
+        </View>
     )
 }
 
